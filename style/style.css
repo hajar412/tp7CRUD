@@ -1,0 +1,323 @@
+:root {
+    --navy: #15253d;
+    --blue: #315f88;
+    --blue-light: #edf4fa;
+    --gold: #e2ad52;
+    --text: #243244;
+    --muted: #6e7b8b;
+    --border: #dde5ed;
+    --white: #ffffff;
+    --danger: #b94a48;
+    --shadow: 0 14px 36px rgba(25, 45, 70, 0.10);
+}
+
+* { box-sizing: border-box; }
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: "Segoe UI", Arial, sans-serif;
+    color: var(--text);
+    background: #f4f7fb;
+}
+
+.page-shell {
+    min-height: 100vh;
+}
+
+body > h1,
+body > form,
+body > table,
+body > a {
+    width: min(1120px, calc(100% - 40px));
+    margin-left: auto;
+    margin-right: auto;
+    justify-content: center;
+}
+
+body > h1 {
+    margin-top: 48px;
+    margin-bottom: 24px;
+    color: var(--navy);
+    font-size: clamp(28px, 4vw, 42px);
+}
+
+.page-topbar {
+    min-height: 68px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 0 28px;
+    color: var(--white);
+    background: var(--navy);
+}
+
+.page-topbar a,
+.page-topbar .home-link { color: var(--white); }
+
+.page-caption,
+.eyebrow {
+    color: #dbe7f3;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1.8px;
+    text-transform: uppercase;
+}
+
+.page-heading {
+    width: min(1120px, calc(100% - 40px));
+    margin: 36px auto 26px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+}
+
+.page-heading .btn,
+.page-heading a.btn {
+    flex: 0 0 auto;
+}
+
+.page-heading h1 {
+    margin: 4px 0 8px;
+    color: var(--navy);
+    font-size: clamp(28px, 4vw, 42px);
+}
+
+.page-heading p { margin: 0; color: var(--muted); }
+.page-heading .eyebrow { color: var(--blue); }
+
+.content-card,
+body > form,
+.dashboard {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    box-shadow: var(--shadow);
+}
+
+.content-card {
+    width: min(1120px, calc(100% - 40px));
+    margin: 0 auto 40px;
+    padding: 8px;
+}
+
+.content-card table {
+    border: 0;
+}
+
+.access-link {
+    justify-content: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    background: var(--blue);
+    color: var(--white);
+    text-decoration: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+}
+
+.table-wrap { overflow-x: auto; }
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--white);
+}
+
+body > table {
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+}
+
+th, td {
+    padding: 15px 18px;
+    border-bottom: 1px solid var(--border);
+    text-align: left;
+    vertical-align: middle;
+}
+
+th {
+    color: var(--navy);
+    background: var(--blue-light);
+    font-size: 13px;
+    letter-spacing: 0.4px;
+}
+
+tbody tr:last-child td { border-bottom: 0; }
+tbody tr:hover { background: #fafcff; }
+
+body > form,
+form { padding: 30px; }
+
+body:has(> form) {
+    display: flex;
+    flex-direction: column;
+}
+
+body:has(> form) > h1,
+body:has(> form) > form,
+body:has(> form) > a {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+body:has(> form) > a {
+    width: max-content;
+}
+
+body > form,
+.content-card form { max-width: 720px; }
+
+form div { margin-bottom: 18px; }
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    color: var(--navy);
+    font-weight: 700;
+}
+
+input,
+select,
+textarea {
+    width: 100%;
+    min-height: 44px;
+    padding: 10px 12px;
+    border: 1px solid #cbd7e4;
+    border-radius: 8px;
+    color: var(--text);
+    background: var(--white);
+    font: inherit;
+}
+
+textarea { min-height: 120px; resize: vertical; }
+
+input:focus,
+select:focus,
+textarea:focus {
+    outline: 3px solid rgba(49, 95, 136, 0.13);
+    border-color: var(--blue);
+}
+
+button,
+.btn,
+a.btn,
+.btn-primary,
+a[href*="create"] {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 42px;
+    padding: 9px 16px;
+    border: 0;
+    border-radius: 8px;
+    color: var(--white);
+    background: var(--blue);
+    font-weight: 700;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+button:hover,
+.btn:hover,
+a.btn:hover,
+a[href*="create"]:hover { background: var(--navy); }
+
+.btn-primary {
+    background: var(--gold);
+    color: #1e2b3b;
+}
+
+a { color: var(--blue); font-weight: 700; }
+a:hover { color: var(--navy); }
+
+body > a {
+    display: inline-flex;
+    margin-top: 20px;
+    margin-bottom: 40px;
+}
+
+td a { margin-right: 8px; }
+td a[href*="delete"] { color: var(--danger); }
+
+.dashboard {
+    width: min(1120px, calc(100% - 40px));
+    margin: 40px auto;
+    padding: 12px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+}
+
+.dashboard > div {
+    min-height: 300px;
+    padding: 28px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+}
+
+.dashboard h2 { color: var(--navy); }
+.dashboard p {
+    min-height: 82px;
+    margin: 24px 0;
+    color: var(--muted);
+}
+
+.dashboard .access-link {
+    width: 100%;
+    margin-top: auto;
+}
+
+.dashboard .access-link a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: 52px;
+    padding: 12px 18px;
+    border-radius: 8px;
+    color: var(--white);
+    background: var(--blue);
+    text-align: center;
+    text-decoration: none;
+}
+
+.dashboard .access-link a:hover,
+.dashboard .access-link a:focus-visible {
+    color: var(--white);
+    background: var(--navy);
+}
+
+@media (max-width: 760px) {
+    .page-heading {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .page-topbar {
+        align-items: flex-start;
+        flex-direction: column;
+        justify-content: center;
+        padding-top: 12px;
+        padding-bottom: 12px;
+    }
+
+    .dashboard { grid-template-columns: 1fr; }
+
+    body > h1,
+    body > form,
+    body > table,
+    body > a,
+    .page-heading,
+    .content-card,
+    .dashboard { width: calc(100% - 24px); }
+
+    table { min-width: 680px; }
+}

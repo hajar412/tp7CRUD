@@ -9,9 +9,22 @@ if (isset($_POST['nom'])
     $description = trim($_POST['description']);
     $duree = $_POST['duree'];
 
-    $sql = "INSERT INTO formations (nom, description, duree) VALUES (:nom, :description, :duree)";
+    $codes = $pdo->query("SELECT codeFormation FROM formations")
+                 ->fetchAll(PDO::FETCH_COLUMN);
+    $numero = 1;
+    foreach ($codes as $code) {
+        if (preg_match('/(\d+)$/', $code, $match)) {
+            $numero = max($numero, (int) $match[1] + 1);
+        }
+    }
+
+    $codeFormation = 'F' . $numero;
+
+    $sql = "INSERT INTO formations (codeFormation, nomFormation, description, duration)
+            VALUES (:codeFormation, :nom, :description, :duree)";
     $statement = $pdo->prepare($sql);
     $statement->execute([
+        ':codeFormation' => $codeFormation,
         ':nom' => $nom,
         ':description' => $description,
         ':duree' => $duree
@@ -29,7 +42,7 @@ if (isset($_POST['nom'])
     <meta charset="UTF-8">
     <title>Ajouter une Formation</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../style/style.css">
 </head>
 <body>
     <h1>Ajouter une Formation</h1>

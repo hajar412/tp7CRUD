@@ -14,8 +14,7 @@ $formations = $pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
 <head>
     <meta charset="UTF-8">
     <title>Centre - Formations</title>
-    <link rel="stylesheet" href="../assets/css/style.css">
-    <link rel="stylesheet" href="../assets/css/pages.css">
+    <link rel="stylesheet" href="../style/style.css">
 </head>
 
 <body class="dashboard-page">
@@ -69,7 +68,8 @@ $formations = $pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
 
                         |
 
-                        <a href="delete.php?id=<?php echo $formation["id"]; ?>">
+                        <a href="delete.php?id=<?php echo urlencode($formation["id"]); ?>"
+                           onclick="return confirm('Supprimer cette formation ?');">
                             Supprimer
                         </a>
 
@@ -83,6 +83,7 @@ $formations = $pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
 
     </table></div></div>
 
+      <a href="../index.php" style="display:block;width:max-content;margin:20px auto 40px;">Retour</a>
     </div>
 
 </body>

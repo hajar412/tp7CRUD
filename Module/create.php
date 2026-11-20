@@ -1,25 +1,39 @@
 <?php
 require_once '../database/connexion.php';
 
-$formations = $pdo->query("SELECT id, nom FROM formations ORDER BY nom")
+$formations = $pdo->query(
+    "SELECT codeFormation, nomFormation FROM formations ORDER BY nomFormation"
+)
                   ->fetchAll(PDO::FETCH_ASSOC);
 
 if (isset($_POST['nom'])
     && isset($_POST['description'])
-    && isset($_POST['formation_id'])
+    && isset($_POST['codeFormation'])
 ) {
     $nom          = trim($_POST['nom']);
     $description  = trim($_POST['description']);
-    $formation_id = $_POST['formation_id'];
+    $codeFormation = $_POST['codeFormation'];
 
-    $sql = "INSERT INTO modules (nom, description, formation_id)
-            VALUES (:nom, :description, :formation_id)";
+    $codes = $pdo->query("SELECT codeModule FROM modules")
+                 ->fetchAll(PDO::FETCH_COLUMN);
+    $numero = 101;
+    foreach ($codes as $code) {
+        if (preg_match('/(\d+)$/', $code, $match)) {
+            $numero = max($numero, (int) $match[1] + 1);
+        }
+    }
+
+    $codeModule = 'M' . $numero;
+
+    $sql = "INSERT INTO modules (codeModule, nomModule, description, codeFormation)
+            VALUES (:codeModule, :nom, :description, :codeFormation)";
 
     $statement = $pdo->prepare($sql);
     $statement->execute([
+        ':codeModule'   => $codeModule,
         ':nom'          => $nom,
         ':description'  => $description,
-        ':formation_id' => $formation_id
+        ':codeFormation' => $codeFormation
     ]);
 
     header("Location: index.php");
@@ -34,7 +48,7 @@ if (isset($_POST['nom'])
     <meta charset="UTF-8">
     <title>Ajouter une Formation</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../style/style.css">
 </head>
 <body>
     <h1>Ajouter un module</h1>
@@ -42,6 +56,18 @@ if (isset($_POST['nom'])
         <div>
             <label for="nom">Nom:</label>
             <input type="text" name="nom" id="nom" required>
+        </div>
+        <br>
+        <div>
+            <label for="codeFormation">Formation:</label>
+            <select name="codeFormation" id="codeFormation" required>
+                <option value="">Choisir une formation</option>
+                <?php foreach ($formations as $formation) { ?>
+                    <option value="<?php echo htmlspecialchars($formation['codeFormation'], ENT_QUOTES, 'UTF-8'); ?>">
+                        <?php echo htmlspecialchars($formation['nomFormation'], ENT_QUOTES, 'UTF-8'); ?>
+                    </option>
+                <?php } ?>
+            </select>
         </div>
         <br>
         <div>

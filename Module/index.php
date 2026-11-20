@@ -15,8 +15,7 @@ $modules = $pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
 <head>
     <meta charset="UTF-8">
     <title>Centre - Modules</title>
-    <link rel="stylesheet" href="../assets/css/style.css">
-    <link rel="stylesheet" href="../assets/css/pages.css">
+    <link rel="stylesheet" href="../style/style.css">
 </head>
 
 <body class="dashboard-page">
@@ -70,7 +69,8 @@ $modules = $pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
 
                         |
 
-                        <a href="delete.php?id=<?php echo $module["id"]; ?>">
+                        <a href="delete.php?id=<?php echo urlencode($module["id"]); ?>"
+                           onclick="return confirm('Supprimer ce module ?');">
                             Supprimer
                         </a>
 
@@ -84,6 +84,7 @@ $modules = $pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
 
     </table></div></div>
 
+      <a href="../index.php" style="display:block;width:max-content;margin:20px auto 40px;">Retour</a>
     </div>
 
 </body>
