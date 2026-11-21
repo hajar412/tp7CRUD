@@ -32,7 +32,6 @@ body > a {
     width: min(1120px, calc(100% - 40px));
     margin-left: auto;
     margin-right: auto;
-    justify-content: center;
 }
 
 body > h1 {
@@ -108,7 +107,6 @@ body > form,
 }
 
 .access-link {
-    justify-content: center;
     margin-top: 20px;
     margin-bottom: 20px;
     background: var(--blue);
@@ -174,6 +172,12 @@ body > form,
 
 form div { margin-bottom: 18px; }
 
+.form-error {
+    margin: 0 0 18px;
+    color: var(--danger);
+    font-weight: 700;
+}
+
 label {
     display: block;
     margin-bottom: 8px;
@@ -225,15 +229,19 @@ a[href*="create"] {
 button:hover,
 .btn:hover,
 a.btn:hover,
-a[href*="create"]:hover { background: var(--navy); }
+a[href*="create"]:hover {
+    background: var(--navy);
+    color: var(--white);
+}
 
-.btn-primary {
+a.btn-primary {
     background: var(--gold);
     color: #1e2b3b;
 }
 
 a { color: var(--blue); font-weight: 700; }
 a:hover { color: var(--navy); }
+.page-topbar a:hover { color: var(--white); }
 
 body > a {
     display: inline-flex;
@@ -308,8 +316,6 @@ td a[href*="delete"] { color: var(--danger); }
         padding-top: 12px;
         padding-bottom: 12px;
     }
-
-    .dashboard { grid-template-columns: 1fr; }
 
     body > h1,
     body > form,

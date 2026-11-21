@@ -1,6 +1,8 @@
 <?php
 require_once '../database/connexion.php';
 
+$erreur = null;
+
 if (isset($_POST['nom'])
     && isset($_POST['description'])
     && isset($_POST['duree'])
@@ -9,29 +11,37 @@ if (isset($_POST['nom'])
     $description = trim($_POST['description']);
     $duree = $_POST['duree'];
 
-    $codes = $pdo->query("SELECT codeFormation FROM formations")
-                 ->fetchAll(PDO::FETCH_COLUMN);
-    $numero = 1;
-    foreach ($codes as $code) {
-        if (preg_match('/(\d+)$/', $code, $match)) {
-            $numero = max($numero, (int) $match[1] + 1);
+    $nomSansSeparateurs = preg_replace('/[^\p{L}]/u', '', $nom);
+    if ($nomSansSeparateurs === null || $nomSansSeparateurs === '') {
+        $erreur = 'Le nom de la formation doit contenir au moins une lettre.';
+    } else {
+        $codeFormation = mb_strtoupper(
+            mb_substr($nomSansSeparateurs, 0, 4, 'UTF-8'),
+            'UTF-8'
+        );
+
+        $sql = "INSERT INTO formations (codeFormation, nomFormation, description, duration)
+                VALUES (:codeFormation, :nom, :description, :duree)";
+
+        try {
+            $statement = $pdo->prepare($sql);
+            $statement->execute([
+                ':codeFormation' => $codeFormation,
+                ':nom' => $nom,
+                ':description' => $description,
+                ':duree' => $duree
+            ]);
+            header("Location: index.php");
+            exit();
+        } catch (PDOException $e) {
+            $mysqlErrorCode = $e->errorInfo[1] ?? null;
+            if ($e->getCode() === '23000' && (int) $mysqlErrorCode === 1062) {
+                $erreur = 'Une formation utilise déjà cet identifiant. Choisissez un nom avec quatre premières lettres différentes.';
+            } else {
+                throw $e;
+            }
         }
     }
-
-    $codeFormation = 'F' . $numero;
-
-    $sql = "INSERT INTO formations (codeFormation, nomFormation, description, duration)
-            VALUES (:codeFormation, :nom, :description, :duree)";
-    $statement = $pdo->prepare($sql);
-    $statement->execute([
-        ':codeFormation' => $codeFormation,
-        ':nom' => $nom,
-        ':description' => $description,
-        ':duree' => $duree
-    ]);
-
-    header("Location: index.php");
-    exit();
 }
 ?>
 
@@ -47,19 +57,22 @@ if (isset($_POST['nom'])
 <body>
     <h1>Ajouter une Formation</h1>
     <form method="post">
+        <?php if ($erreur !== null) { ?>
+            <p class="form-error" role="alert"><?php echo htmlspecialchars($erreur, ENT_QUOTES, 'UTF-8'); ?></p>
+        <?php } ?>
         <div>
             <label for="nom">Nom:</label>
-            <input type="text" name="nom" id="nom" required>
+            <input type="text" name="nom" id="nom" value="<?php echo htmlspecialchars($_POST['nom'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" required>
         </div>
         <br>
         <div>
             <label for="description">Description:</label>
-            <textarea name="description" id="description" required></textarea>
+            <textarea name="description" id="description" required><?php echo htmlspecialchars($_POST['description'] ?? '', ENT_QUOTES, 'UTF-8'); ?></textarea>
         </div>
         <br>
         <div>
             <label for="duree">Durée (en heures):</label>
-            <input type="number" name="duree" id="duree" required>
+            <input type="number" name="duree" id="duree" min="1" value="<?php echo htmlspecialchars($_POST['duree'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" required>
         </div>
         <br>
         <button type="submit" value="Ajouter">Ajouter</button>

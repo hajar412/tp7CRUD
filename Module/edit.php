@@ -28,7 +28,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $sql = "UPDATE modules
             SET nomModule = :nom, description = :description, codeFormation = :codeFormation
             WHERE codeModule = :id";
-
     $statement = $pdo->prepare($sql);
     $statement->execute([
         "nom" => trim($_POST["nom"]),
@@ -54,7 +53,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 <body>
 
     <h1>Modifier un module</h1>
-
     <form method="POST">
 
         <div>

@@ -33,7 +33,7 @@ $formations = $pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
                 <th>ID</th>
                 <th>Nom</th>
                 <th>Description</th>
-                <th>Durée (mois)</th>
+                <th>Durée (heures)</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -62,7 +62,7 @@ $formations = $pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
 
                     <td>
 
-                        <a href="edit.php?id=<?php echo $formation["id"]; ?>">
+                        <a href="edit.php?id=<?php echo urlencode($formation["id"]); ?>">
                             Modifier
                         </a>
 

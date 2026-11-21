@@ -63,7 +63,7 @@ $modules = $pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
 
                     <td>
 
-                        <a href="edit.php?id=<?php echo $module["id"]; ?>">
+                        <a href="edit.php?id=<?php echo urlencode($module["id"]); ?>">
                             Modifier
                         </a>
 

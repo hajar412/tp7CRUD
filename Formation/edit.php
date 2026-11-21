@@ -23,7 +23,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $sql = "UPDATE formations
             SET nomFormation = :nom, description = :description, duration = :duree
             WHERE codeFormation = :id";
-
     $statement = $pdo->prepare($sql);
     $statement->execute([
         "nom" => trim($_POST["nom"]),
@@ -49,7 +48,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 <body>
 
     <h1>Modifier une formation</h1>
-
     <form method="POST">
 
         <div>
@@ -68,9 +66,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         <br>
 
         <div>
-            <label for="duree">Durée (mois) :</label>
+            <label for="duree">Durée (heures) :</label>
             <input type="number" id="duree" name="duree" min="1"
-                   value="<?php echo $formation["duration"]; ?>" required>
+                   value="<?php echo htmlspecialchars($formation["duration"]); ?>" required>
         </div>
 
         <br>
