@@ -247,5 +247,6 @@ Les listes déroulantes des formulaires sont alimentées par la table `formation
 
 ## Auteure
 
-Hajar, Licence Développement Web Full Stack et DevOps, FST Marrakech.
-Enseignant : Nefdaoui Aymane.
+- **Étudiante** : El kasraoui Hajar
+- **Formation** : Licence Développement Web Full Stack et DevOps, FST Marrakech
+- **Enseignant** : Nefdaoui Aymane
